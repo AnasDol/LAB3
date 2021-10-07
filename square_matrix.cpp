@@ -83,7 +83,8 @@ square_matrix square_matrix::add(square_matrix mat1, square_matrix mat2)
 {
 
 	if (mat1.order != mat2.order) {
-		//cout << "—кладывать можно только матрицы одного пор€дка\n\n";
+		//throw Exception("")
+		//cout << "—кладывать можно только матрицы одного пор€дка!\n\n";
 		return NULL;
 	}
 
