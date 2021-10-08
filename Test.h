@@ -9,5 +9,6 @@ public:
 
 	static bool testAddition1();
 	static bool testAddition2();
+
 };
 

@@ -1,4 +1,6 @@
 #pragma once
+#include "Exception.h"
+#include <iostream>
 using namespace std;
 
 class square_matrix
@@ -18,12 +20,31 @@ public:
 	static square_matrix add(square_matrix mat1, square_matrix mat2); // складывает две матрицы
 
 	int getOrder() { return order; }
-	//int** getData() { return data; }
 	int getDataIJ(int i, int j) { return data[i][j]; }
 
-	void setOrder(int ord) { order = ord; }
-	void setData(int** d) { data = d; }
-	void setDataIJ(int x, int i, int j) { data[i][j] = x; }
+	void setOrder(int ord) { 
+		if (ord <= 0) {
+			char str[1000] = "";
+			strcat_s(str, sizeof(str), "Invalid order of matrix");
+			throw Exception(str);
+		}
+		order = ord;
+	}
+	void setData(int** d) {
+		if (data == nullptr) {
+			char str[1000] = "";
+			strcat_s(str, sizeof(str), "Invalid data");
+			throw Exception(str);
+		}
+	}
+	void setDataIJ(int x, int i, int j) { 
+		try {
+			data[i][j] = x;
+		}
+		catch (exception ex) {
+			cout << ex.what() << "\n";
+		}
+ 	}
 
 	~square_matrix();
 
