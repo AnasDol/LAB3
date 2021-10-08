@@ -1,4 +1,5 @@
 #pragma once
+
 class Exception
 {
 
@@ -6,7 +7,7 @@ public:
 
 	Exception(char error[]) : m_error(error) {}
 
-	char* GetError() {
+	char* what() {
 		return m_error;
 	}
 

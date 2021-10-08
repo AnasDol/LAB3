@@ -6,11 +6,15 @@ using namespace std;
 
 int main() {
 
+	square_matrix mat(-5);
+	mat.fill_rand();
+	cout << mat.to_string();
+
 	try {
 		Test::testTransposition1();
 	}
 	catch (Exception ex) {
-		cout << ex.GetError() << "\n";
+		cout << ex.what() << "\n";
 	}
 
 
@@ -18,7 +22,7 @@ int main() {
 		Test::testTransposition2();
 	}
 	catch (Exception ex) {
-		cout << ex.GetError() << "\n";
+		cout << ex.what() << "\n";
 	}
 
 
@@ -26,7 +30,7 @@ int main() {
 		Test::testAddition1();
 	}
 	catch (Exception ex) {
-		cout << ex.GetError() << "\n";
+		cout << ex.what() << "\n";
 	}
 
 
@@ -34,7 +38,7 @@ int main() {
 		Test::testAddition2();
 	}
 	catch (Exception ex) {
-		cout << ex.GetError() << "\n";
+		cout << ex.what() << "\n";
 	}
 
 }

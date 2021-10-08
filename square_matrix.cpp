@@ -1,42 +1,59 @@
 #include "square_matrix.h"
+#include "Exception.h"
 #include <iostream>
-
-#include <string.h>
 
 square_matrix::square_matrix(int order)
 {
-	this->order = order;
-	data = new int* [order];
-	for (int i = 0; i < order; i++) {
-		data[i] = new int[order];
+	
+	try {
+		this->order = order;
+		data = new int* [order];
+		for (int i = 0; i < order; i++) {
+			data[i] = new int[order];
+
+		}
+	} catch (exception ex) {
+		cout<<ex.what()<<"\n";
 	}
 }
 
 square_matrix::square_matrix(int order, int** data)
 {
-	this->order = order;
-	this->data = new int* [order];
-	for (int i = 0; i < order; i++) {
-		this->data[i] = new int[order];
-	}
-	for (int i = 0; i < order; i++) {
-		for (int j = 0; j < order; j++) {
-			this->data[i][j] = data[i][j];
+
+	try {
+		this->order = order;
+		this->data = new int* [order];
+		for (int i = 0; i < order; i++) {
+			this->data[i] = new int[order];
+		}
+		for (int i = 0; i < order; i++) {
+			for (int j = 0; j < order; j++) {
+				this->data[i][j] = data[i][j];
+			}
 		}
 	}
+	catch (exception ex) {
+		cout << ex.what() << "\n";
+	}
+	
 }
 
 square_matrix::square_matrix(const square_matrix& mat)
 {
-	order = mat.order;
-	data = new int* [order];
-	for (int i = 0; i < order; i++) {
-		data[i] = new int[order];
-	}
-	for (int i = 0; i < order; i++) {
-		for (int j = 0; j < order; j++) {
-			data[i][j] = mat.data[i][j];
+	try {
+		order = mat.order;
+		data = new int* [order];
+		for (int i = 0; i < order; i++) {
+			data[i] = new int[order];
 		}
+		for (int i = 0; i < order; i++) {
+			for (int j = 0; j < order; j++) {
+				data[i][j] = mat.data[i][j];
+			}
+		}
+	}
+	catch (exception ex) {
+		cout << ex.what() << "\n";
 	}
 }
 
@@ -61,7 +78,9 @@ square_matrix square_matrix::transpose()
 square_matrix square_matrix::add(square_matrix mat)
 {
 	if (mat.order != order) {
-		//cout << "—кладывать можно только матрицы одного пор€дка\n\n";
+		char str[1000] = "";
+		strcat_s(str, sizeof(str), "Only matrices of the same order can be added");
+		throw Exception(str);
 		return NULL;
 	}
 
@@ -83,8 +102,9 @@ square_matrix square_matrix::add(square_matrix mat1, square_matrix mat2)
 {
 
 	if (mat1.order != mat2.order) {
-		//throw Exception("")
-		//cout << "—кладывать можно только матрицы одного пор€дка!\n\n";
+		char str[1000] = "";
+		strcat_s(str, sizeof(str), "Only matrices of the same order can be added");
+		throw Exception(str);
 		return NULL;
 	}
 
