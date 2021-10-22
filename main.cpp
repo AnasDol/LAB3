@@ -1,44 +1,19 @@
 #include <iostream>
 #include "Test.h"
 #include "square_matrix.h"
+#include "rectangular_matrix.h"
+#include "identity_matrix.h"
 #include "Exception.h"
+#define CATCH_CONFIG_RUNNER
+#include "C:\src\vcpkg\packages\catch2_x64-windows-static\include\catch2\catch.hpp"
+
 using namespace std;
 
-int main() {
+int main(int argc, char* argv[]) {
 
-	square_matrix mat(-5);
-	mat.fill_rand();
-	cout << mat.to_string();
+	int result = Catch::Session().run(argc, argv);
 
-	try {
-		Test::testTransposition1();
-	}
-	catch (Exception ex) {
-		cout << ex.what() << "\n";
-	}
+	return (result < 0xff ? result : 0xff);
 
-
-	try {
-		Test::testTransposition2();
-	}
-	catch (Exception ex) {
-		cout << ex.what() << "\n";
-	}
-
-
-	try {
-		Test::testAddition1();
-	}
-	catch (Exception ex) {
-		cout << ex.what() << "\n";
-	}
-
-
-	try {
-		Test::testAddition2();
-	}
-	catch (Exception ex) {
-		cout << ex.what() << "\n";
-	}
 
 }

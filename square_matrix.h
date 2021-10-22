@@ -19,10 +19,10 @@ public:
 	square_matrix add(square_matrix mat); // складывает текущую матрицу с переданной в аргументе
 	static square_matrix add(square_matrix mat1, square_matrix mat2); // складывает две матрицы
 
-	int getOrder() { return order; }
-	int getDataIJ(int i, int j) { return data[i][j]; }
+	int get_order() { return order; }
+	int get_dataIJ(int i, int j) { return data[i][j]; }
 
-	void setOrder(int ord) { 
+	void set_order(int ord) { 
 		if (ord <= 0) {
 			char str[1000] = "";
 			strcat_s(str, sizeof(str), "Invalid order of matrix");
@@ -30,14 +30,14 @@ public:
 		}
 		order = ord;
 	}
-	void setData(int** d) {
+	void set_data(int** d) {
 		if (data == nullptr) {
 			char str[1000] = "";
 			strcat_s(str, sizeof(str), "Invalid data");
 			throw Exception(str);
 		}
 	}
-	void setDataIJ(int x, int i, int j) { 
+	void set_dataIJ(int x, int i, int j) { 
 		try {
 			data[i][j] = x;
 		}
@@ -48,7 +48,8 @@ public:
 
 	~square_matrix();
 
-private:
+
+protected:
 
 	int order; // порядок квадратной матрицы
 	int** data; // ее содержимое
