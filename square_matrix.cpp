@@ -146,8 +146,6 @@ char* square_matrix::to_string()
 	return str;
 }
 
-//catch2
-
 square_matrix::~square_matrix()
 {
 	for (int i = 0; i < order; i++)
