@@ -148,6 +148,7 @@
     <ClCompile Include="Exception.cpp" />
     <ClCompile Include="identity_matrix.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MatrixList.cpp" />
     <ClCompile Include="rectangular_matrix.cpp" />
     <ClCompile Include="square_matrix.cpp" />
     <ClCompile Include="Test.cpp" />
@@ -156,6 +157,7 @@
   <ItemGroup>
     <ClInclude Include="Exception.h" />
     <ClInclude Include="identity_matrix.h" />
+    <ClInclude Include="MatrixList.h" />
     <ClInclude Include="rectangular_matrix.h" />
     <ClInclude Include="square_matrix.h" />
     <ClInclude Include="Test.h" />

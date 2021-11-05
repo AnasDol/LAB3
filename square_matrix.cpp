@@ -146,6 +146,48 @@ char* square_matrix::to_string()
 	return str;
 }
 
+square_matrix square_matrix::multiple_num(int num)
+{
+
+	int** mult_data = new int* [order];
+	for (int i = 0; i < order; i++) {
+		mult_data[i] = new int[order];
+	}
+
+	for (int i = 0; i < order; i++) {
+		for (int j = 0; j < order; j++) {
+			mult_data[i][j] = data[i][j] * num;
+		}
+	}
+
+	return square_matrix(order, mult_data);
+}
+
+int* square_matrix::operator[](int index)
+{
+	return data[index];
+}
+
+float square_matrix::operator()(square_matrix m)
+{
+	return 0.0f;
+}
+
+square_matrix operator+(square_matrix m1, square_matrix m2)
+{
+	return square_matrix::add(m1,m2);
+}
+
+square_matrix operator-(square_matrix m)
+{
+	return m.multiple_num(-1);
+}
+
+square_matrix operator-(square_matrix m1, square_matrix m2)
+{
+	return square_matrix::add(m1, m2.multiple_num(-1));
+}
+
 square_matrix::~square_matrix()
 {
 	for (int i = 0; i < order; i++)

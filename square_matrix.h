@@ -13,7 +13,7 @@ public:
 	square_matrix(const square_matrix& mat);
 
 	void fill_rand(int a = -100, int b = 100); // заполняет случайными значениями
-	char* to_string();
+	virtual char* to_string();
 
 	square_matrix transpose(); // транспонирует
 	square_matrix add(square_matrix mat); // складывает текущую матрицу с переданной в аргументе
@@ -45,6 +45,14 @@ public:
 			cout << ex.what() << "\n";
 		}
  	}
+
+	square_matrix multiple_num(int num);
+
+	friend square_matrix operator+ (square_matrix m1, square_matrix m2);
+	friend square_matrix operator- (square_matrix m1, square_matrix m2);
+	friend square_matrix operator- (square_matrix m);
+	int* operator[] (int i);
+	float operator()(square_matrix m);
 
 	~square_matrix();
 

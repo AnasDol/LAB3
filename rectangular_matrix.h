@@ -12,7 +12,7 @@ public:
     rectangular_matrix(int rows, int cols);
     rectangular_matrix(int rows, int cols, int** data);
 
-    char* to_string();
+    virtual char* to_string();
     void fill_rand(int a = -100, int b = 100);
 
     rectangular_matrix transpose();
