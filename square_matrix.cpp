@@ -2,6 +2,8 @@
 #include "Exception.h"
 #include <iostream>
 
+//  ŒÕ—“–” “Œ–€
+
 square_matrix::square_matrix(int order)
 {
 	
@@ -56,6 +58,8 @@ square_matrix::square_matrix(const square_matrix& mat)
 		cout << ex.what() << "\n";
 	}
 }
+
+// ¡¿«Œ¬€… ‘”Õ ÷»ŒÕ¿À
 
 square_matrix square_matrix::transpose()
 {
@@ -163,14 +167,77 @@ square_matrix square_matrix::multiple_num(int num)
 	return square_matrix(order, mult_data);
 }
 
+// œŒ»—  Œœ–≈ƒ≈À»“≈Àﬂ
+
+void square_matrix::subMatrix(int** mat, int** temp, int p, int q, int n) {
+	int i = 0, j = 0;
+	for (int row = 0; row < n; row++) {
+		for (int col = 0; col < n; col++) {
+			if (row != p && col != q) {
+				temp[i][j++] = mat[row][col];
+				if (j == n - 1) {
+					j = 0;
+					i++;
+				}
+			}
+		}
+	}
+}
+
+int square_matrix::determinant(int** matrix, int n) {
+	int det = 0;
+	if (n == 1) {
+		return matrix[0][0];
+	}
+	if (n == 2) {
+		return (matrix[0][0] * matrix[1][1]) - (matrix[0][1] * matrix[1][0]);
+	}
+	int** temp = new int* [n];
+	for (int i = 0; i < n; i++) {
+		temp[i] = new int[n];
+	}
+	int sign = 1;
+	for (int i = 0; i < n; i++) {
+		subMatrix(matrix, temp, 0, i, n);
+		det += sign * matrix[0][i] * determinant(temp, n - 1);
+		sign = -sign;
+	}
+	for (int i = 0; i < n; i++)
+		delete[] temp[i];
+	delete[] temp;
+	return det;
+}
+
+int square_matrix::determinant()
+{
+	return determinant(data, order);
+}
+
+// œ≈–≈√–”« ¿ Œœ≈–¿“Œ–Œ¬
+
 int* square_matrix::operator[](int index)
 {
 	return data[index];
 }
 
-float square_matrix::operator()(square_matrix m)
+int square_matrix::operator()()
 {
-	return 0.0f;
+	return determinant(data, order);
+}
+
+square_matrix& square_matrix::operator=(square_matrix& m)
+{
+	order = m.order;
+	data = new int* [order];
+	for (int i = 0; i < order; i++) {
+		data[i] = new int[order];
+	}
+	for (int i = 0; i < order; i++) {
+		for (int j = 0; j < order; j++) {
+			data[i][j] = m.data[i][j];
+		}
+	}
+	return *this;
 }
 
 square_matrix operator+(square_matrix m1, square_matrix m2)
@@ -187,6 +254,10 @@ square_matrix operator-(square_matrix m1, square_matrix m2)
 {
 	return square_matrix::add(m1, m2.multiple_num(-1));
 }
+
+
+
+// ƒ≈—“–” “Œ–
 
 square_matrix::~square_matrix()
 {

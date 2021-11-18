@@ -1,7 +1,7 @@
 #include "C:\src\vcpkg\packages\catch2_x64-windows-static\include\catch2\catch.hpp"
 #include "rectangular_matrix.h"
 #include "identity_matrix.h"
-#include "MatrixList.h"
+#include "Queue.h"
 
 
 TEST_CASE("creation") {
@@ -17,7 +17,7 @@ TEST_CASE("creation") {
 	 }
 
 	rectangular_matrix mat(3, 5, arr);
-	printf(mat.to_string());
+	//printf(mat.to_string());
 
 	REQUIRE(mat.get_rows() == 3);
 	REQUIRE(mat.get_columns() == 5);
@@ -67,8 +67,8 @@ TEST_CASE("operators") {
 
 	square_matrix m1(5, arr1);
 
-	//printf(m1.to_string());
-	//cout << "\n";
+	printf(m1.to_string());
+	cout << "\n";
 
 	int** arr2 = new int* [5];
 	for (int i = 0; i < 5; i++) {
@@ -82,7 +82,7 @@ TEST_CASE("operators") {
 
 	square_matrix m2(5, arr2);
 
-	/*printf(m2.to_string());
+	printf(m2.to_string());
 	cout << "\n";
 
 
@@ -93,13 +93,28 @@ TEST_CASE("operators") {
 	cout << "\n";
 
 	printf("%d", m2[2][2]);
-	cout << "\n";*/
+	cout << "\n\n";
+
+	square_matrix m3(3);
+	m3.fill_rand();
+
+	printf(m3.to_string());
+	cout << "\n";
+
+	printf("%d", m3.determinant());
+	cout << "\n\n";
+
+	printf("%d", m3());
+	cout << "\n\n";
+
+	square_matrix m4 = m3;
+
 }
 
 
 TEST_CASE("queue") {
 
-	square_matrix m1(3);
+	/*square_matrix m1(3);
 	m1.fill_rand();
 	printf(m1.to_string());
 	cout << "\n\n";
@@ -201,6 +216,6 @@ TEST_CASE("queue") {
 
 
 
-
+	*/
 
 }

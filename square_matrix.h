@@ -48,11 +48,16 @@ public:
 
 	square_matrix multiple_num(int num);
 
+	int determinant();
+	static int determinant(int** matrix, int n);
+	static void subMatrix(int** mat, int** temp, int p, int q, int n);
+
 	friend square_matrix operator+ (square_matrix m1, square_matrix m2);
 	friend square_matrix operator- (square_matrix m1, square_matrix m2);
 	friend square_matrix operator- (square_matrix m);
 	int* operator[] (int i);
-	float operator()(square_matrix m);
+	int operator()();
+	square_matrix& operator=(square_matrix& m);
 
 	~square_matrix();
 
