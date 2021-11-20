@@ -2,11 +2,12 @@
 #include "rectangular_matrix.h"
 #include "identity_matrix.h"
 #include "Queue.h"
+#include <fstream>
 
 
 TEST_CASE("creation") {
 
-	int** arr = new int* [3];
+	/*int** arr = new int* [3];
 	for (int i = 0; i < 3; i++) {
 		arr[i] = new int[5];
 	}
@@ -47,14 +48,14 @@ TEST_CASE("creation") {
 			}
 		}
 
-	}
+	}*/
 
 }
 
 
 TEST_CASE("operators") {
 
-
+	
 	int** arr1 = new int* [5];
 	for (int i = 0; i < 5; i++) {
 		arr1[i] = new int[5];
@@ -67,8 +68,8 @@ TEST_CASE("operators") {
 
 	square_matrix m1(5, arr1);
 
-	printf(m1.to_string());
-	cout << "\n";
+	//printf(m1.to_string());
+	//cout << "\n";
 
 	int** arr2 = new int* [5];
 	for (int i = 0; i < 5; i++) {
@@ -82,11 +83,74 @@ TEST_CASE("operators") {
 
 	square_matrix m2(5, arr2);
 
-	printf(m2.to_string());
-	cout << "\n";
+	//printf(m2.to_string());
+	//cout << "\n";
+
+	square_matrix m3 = m1 + m2;
+	bool f = 0;
+
+	for (int i = 0; i < 5; i++) {
+		for (int j = 0; j < 5; j++) {
+
+			if (m3[i][j] != arr1[i][j] + arr2[i][j]) {
+				f = 1;
+				break;
+			}
+
+		}
+		if (f == 1) break;
+	}
+	REQUIRE(f == 0);
+
+	square_matrix m4 = -m2;
+	f = 0;
+	for (int i = 0; i < 5; i++) {
+		for (int j = 0; j < 5; j++) {
+
+			if (m4[i][j] != -1 * arr2[i][j]) {
+				f = 1;
+				break;
+			}
+
+		}
+		if (f == 1) break;
+	}
+	REQUIRE(f == 0);
+
+	square_matrix m5 = m1-m2;
+	f = 0;
+	for (int i = 0; i < 5; i++) {
+		for (int j = 0; j < 5; j++) {
+
+			if (m5[i][j] != arr1[i][j] - arr2[i][j]) {
+				f = 1;
+				break;
+			}
+
+		}
+		if (f == 1) break;
+	}
+	REQUIRE(f == 0);
+
+	square_matrix m6 = m1;
+	f = 0;
+	for (int i = 0; i < 5; i++) {
+		for (int j = 0; j < 5; j++) {
+
+			if (m6[i][j] != arr1[i][j]) {
+				f = 1;
+				break;
+			}
+
+		}
+		if (f == 1) break;
+	}
+	REQUIRE(f == 0);
+
+	REQUIRE(m1()==0);
 
 
-	printf((m1 + m2).to_string());
+	/*printf((m1 + m2).to_string());
 	cout << "\n";
 
 	printf((-m2).to_string());
@@ -95,26 +159,126 @@ TEST_CASE("operators") {
 	printf("%d", m2[2][2]);
 	cout << "\n\n";
 
-	square_matrix m3(3);
-	m3.fill_rand();
+	square_matrix m7(3);
+	m7.fill_rand();
 
-	printf(m3.to_string());
+	printf(m7.to_string());
 	cout << "\n";
 
-	printf("%d", m3.determinant());
+	printf("%d", m7.determinant());
 	cout << "\n\n";
 
-	printf("%d", m3());
+	printf("%d", m7());
 	cout << "\n\n";
 
-	square_matrix m4 = m3;
+	square_matrix m8 = m7;*/
+	
+}
+
+
+TEST_CASE("threads") {
+
+	square_matrix m1(4);
+	m1.fill_rand();
+	cout << m1 << endl;
+
+	square_matrix m2;
+	m2.fill_rand();
+	cout << m2 << endl;
+
+	// запишем матрицу m1 в текстовый файл FILE.TXT
+
+	m1.twrite();
+
+	// запишем матрицу m2 туда же
+
+	square_matrix::twrite(&m2);
+
+	// запишем матрицы в обратном порядке в бинарный файл FILE.DAT
+
+	m2.bwrite();
+	square_matrix::bwrite(&m1);
+
+	// читаем матрицы из текстового файла
+
+	square_matrix m3(square_matrix::tread(1));
+	//cout << m3 << endl;
+	square_matrix m4(square_matrix::tread(2));
+	//cout << m4 << endl;
+
+	// проверим на совпадение с исходными матрицами
+
+	bool f = 0;
+
+	for (int i = 0; i < m3.get_order(); i++) {
+		for (int j = 0; j < m3.get_order(); j++) {
+			if (m3[i][j] != m1[i][j]) {
+				f = 1;
+				break;
+			}
+		}
+		if (f == 1) break;
+	}
+
+	REQUIRE(f == 0); // m3==m1
+
+	f = 0;
+
+	for (int i = 0; i < m4.get_order(); i++) {
+		for (int j = 0; j < m4.get_order(); j++) {
+			if (m4[i][j] != m2[i][j]) {
+				f = 1;
+				break;
+			}
+		}
+		if (f == 1) break;
+	}
+
+	REQUIRE(f == 0); // m4==m2
+
+	// читаем матрицы из бинарного файла файла
+
+	square_matrix m5(square_matrix::bread(1));
+	//cout << m3 << endl;
+	square_matrix m6(square_matrix::bread(2));
+	//cout << m4 << endl;
+
+	// проверим на совпадение с исходными матрицами
+
+	f = 0;
+
+	for (int i = 0; i < m5.get_order(); i++) {
+		for (int j = 0; j < m5.get_order(); j++) {
+			if (m5[i][j] != m2[i][j]) {
+				f = 1;
+				break;
+			}
+		}
+		if (f == 1) break;
+	}
+
+	REQUIRE(f == 0); // m3==m1
+
+	f = 0;
+
+	for (int i = 0; i < m6.get_order(); i++) {
+		for (int j = 0; j < m6.get_order(); j++) {
+			if (m6[i][j] != m1[i][j]) {
+				f = 1;
+				break;
+			}
+		}
+		if (f == 1) break;
+	}
+
+	REQUIRE(f == 0); // m4==m2
 
 }
 
 
 TEST_CASE("queue") {
-
-	/*square_matrix m1(3);
+	/*
+	square_matrix m1(3);
 	m1.fill_rand();
 	printf(m1.to_string());
 	cout << "\n\n";

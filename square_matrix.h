@@ -3,6 +3,9 @@
 #include <iostream>
 using namespace std;
 
+#define filename_t "File.txt"
+#define filename_b "File.dat"
+
 class square_matrix
 {
 
@@ -50,14 +53,25 @@ public:
 
 	int determinant();
 	static int determinant(int** matrix, int n);
-	static void subMatrix(int** mat, int** temp, int p, int q, int n);
+	static void submatrix(int** mat, int** temp, int p, int q, int n);
 
 	friend square_matrix operator+ (square_matrix m1, square_matrix m2);
 	friend square_matrix operator- (square_matrix m1, square_matrix m2);
 	friend square_matrix operator- (square_matrix m);
 	int* operator[] (int i);
+
 	int operator()();
 	square_matrix& operator=(square_matrix& m);
+	friend ostream& operator<< (ostream& os, square_matrix& m);
+	friend istream& operator>> (istream& is, square_matrix& m);
+
+	void twrite(); // записывает матрицу в текстовый файл
+	static void twrite(square_matrix* m);
+	static square_matrix tread(int index = 1); // читает матрицу из текстовый файла
+
+	void bwrite(); // записывает матрицу в двоичный файл
+	static void bwrite(square_matrix* m);
+	static square_matrix bread(int index = 1); // читает матрицу из двоичного файла
 
 	~square_matrix();
 
@@ -66,6 +80,7 @@ protected:
 
 	int order; // пор€док квадратной матрицы
 	int** data; // ее содержимое
+
 
 };
 

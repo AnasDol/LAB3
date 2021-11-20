@@ -9,6 +9,10 @@ struct Elem {
 		next = nullptr;
 	}
 
+	~Elem() {
+		delete[] mat, prev, next;
+	}
+
 	square_matrix * mat;
 	Elem* prev;
 	Elem* next;
@@ -34,4 +38,6 @@ private:
 	Elem* first;
 
 };
+
+// днаюбхрэ деярпсйрнпш
 

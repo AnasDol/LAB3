@@ -1,6 +1,7 @@
 #include "square_matrix.h"
 #include "Exception.h"
 #include <iostream>
+#include <fstream>
 
 // ÊÎÍÑÒĞÓÊÒÎĞÛ
 
@@ -169,7 +170,7 @@ square_matrix square_matrix::multiple_num(int num)
 
 // ÏÎÈÑÊ ÎÏĞÅÄÅËÈÒÅËß
 
-void square_matrix::subMatrix(int** mat, int** temp, int p, int q, int n) {
+void square_matrix::submatrix(int** mat, int** temp, int p, int q, int n) {
 	int i = 0, j = 0;
 	for (int row = 0; row < n; row++) {
 		for (int col = 0; col < n; col++) {
@@ -198,7 +199,7 @@ int square_matrix::determinant(int** matrix, int n) {
 	}
 	int sign = 1;
 	for (int i = 0; i < n; i++) {
-		subMatrix(matrix, temp, 0, i, n);
+		submatrix(matrix, temp, 0, i, n);
 		det += sign * matrix[0][i] * determinant(temp, n - 1);
 		sign = -sign;
 	}
@@ -227,6 +228,9 @@ int square_matrix::operator()()
 
 square_matrix& square_matrix::operator=(square_matrix& m)
 {
+	for (int i = 0; i < order; i++)
+		delete[] data[i];
+	delete[] data;
 	order = m.order;
 	data = new int* [order];
 	for (int i = 0; i < order; i++) {
@@ -242,7 +246,7 @@ square_matrix& square_matrix::operator=(square_matrix& m)
 
 square_matrix operator+(square_matrix m1, square_matrix m2)
 {
-	return square_matrix::add(m1,m2);
+	return square_matrix::add(m1, m2);
 }
 
 square_matrix operator-(square_matrix m)
@@ -250,12 +254,140 @@ square_matrix operator-(square_matrix m)
 	return m.multiple_num(-1);
 }
 
+ostream& operator<<(ostream& os, square_matrix& m)
+{
+	//os << "\nsMatrix:\n" << m.to_string() << "\n";
+
+	os << "\n";
+	for (int i = 0; i < m.order; i++) {
+		for (int j = 0; j < m.order; j++){
+			os << m[i][j] << " ";
+		}
+		os << "\n";
+	}
+
+	return os;
+
+}
+
+istream& operator>>(istream& is, square_matrix& m)
+{
+	for (int i = 0; i < m.order; i++)
+		delete[] m.data[i];
+	delete[] m.data;
+
+	is >> m.order;
+	m.data = new int* [m.order];
+	for (int i = 0; i < m.order; i++) {
+		m.data[i] = new int[m.order];
+	}
+
+	for (int i = 0; i < m.order; i++) {
+		for (int j = 0; j < m.order; j++) {
+			is >> m.data[i][j];
+		}
+	}
+	return is;
+
+}
+
 square_matrix operator-(square_matrix m1, square_matrix m2)
 {
 	return square_matrix::add(m1, m2.multiple_num(-1));
 }
 
+// ÔÀÉËÎÂÛÉ ÂÂÎÄ-ÂÛÂÎÄ
 
+void square_matrix::twrite()
+{
+	ofstream ftout("File.txt", ios::app); // îòêğûâàåì äëÿ äîçàïèñè
+
+	if (!ftout) {
+		cerr << "Error: unable to open file " << endl;
+		exit(1);
+	}
+	ftout << order << *(this);
+	ftout.close();
+}
+
+void square_matrix::twrite(square_matrix* m)
+{
+	ofstream ftout("File.txt", ios::app);
+	if (!ftout) {
+		cerr << "Error: unable to open file " << endl;
+		exit(1);
+	}
+	ftout << m->order << *(m);
+	ftout.close();
+}
+
+square_matrix square_matrix::tread(int index)
+{
+	ifstream ftin("File.txt", ios::in);
+	if (!ftin) {
+		cerr << "Error: unable to open file " << endl;
+		exit(1);
+	}
+	// ñìåùàåìñÿ  ê íóæíîé ìàòğèöå
+	square_matrix m;
+	//int ord;
+	for (int i = 1; i <= index; i++) {
+		//ftin >> ord;
+		//ftin.seekg(long(sizeof(int)) * ord * ord + 1, ios::cur);
+		try {
+			ftin >> m;
+		}
+		catch (exception ex) {
+			cout << ex.what() << "\n";
+		}
+	}
+	ftin.close();
+	return m;
+}
+
+void square_matrix::bwrite()
+{
+	ofstream fdout(filename_b, ios::binary | ios::app);
+	if (!fdout) {
+		cerr << "Error: unable to open file " << endl;
+		exit(1);
+	}
+	fdout << this->order <<*(this);
+	fdout.close();
+
+}
+
+void square_matrix::bwrite(square_matrix* m)
+{
+	ofstream fdout(filename_b, ios::binary | ios::app);
+	if (!fdout) {
+		cerr << "Error: unable to open file " << endl;
+		exit(1);
+	}
+	fdout << m->order << *(m);
+	fdout.close();
+
+}
+
+square_matrix square_matrix::bread(int index)
+{
+	ifstream fdin(filename_b, ios::binary | ios::in);
+	if (!fdin) {
+		cerr << "Error: unable to open file " << endl;
+		exit(1);
+	}
+	square_matrix m;
+	for (int i = 1; i <= index; i++) {
+		try {
+			fdin >> m;
+		}
+		catch (exception ex) {
+			cout << ex.what() << "\n";
+		}
+	}
+	fdin.close();
+	return m;
+}
 
 // ÄÅÑÒĞÓÊÒÎĞ
 
