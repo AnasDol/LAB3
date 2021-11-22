@@ -21,6 +21,8 @@ public:
     int get_rows() { return rows; }
     int get_columns() { return cols; }
 
+    friend ostream& operator<< (ostream& os, rectangular_matrix& m);
+
     ~rectangular_matrix();
 
 private:

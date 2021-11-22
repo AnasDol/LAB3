@@ -100,4 +100,20 @@ rectangular_matrix rectangular_matrix::multiple_num(int num)
 	return rectangular_matrix(rows, cols, mult_data);
 }
 
+ostream& operator<<(ostream& os, rectangular_matrix& m)
+{
+	//os << "\nsMatrix:\n" << m.to_string() << "\n";
+
+	os << "\n";
+	for (int i = 0; i < m.rows; i++) {
+		for (int j = 0; j < m.cols; j++) {
+			os << m[i][j] << " ";
+		}
+		os << "\n";
+	}
+
+	return os;
+
+}
+
 rectangular_matrix::~rectangular_matrix() {}

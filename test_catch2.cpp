@@ -2,6 +2,7 @@
 #include "rectangular_matrix.h"
 #include "identity_matrix.h"
 #include "Queue.h"
+#include "TQueue.h"
 #include <fstream>
 
 
@@ -381,5 +382,52 @@ TEST_CASE("queue") {
 
 
 	*/
+
+}
+
+
+TEST_CASE("template") {
+
+	TQueue<int> q1;
+
+	int i1 = 5, i2 = -4, i3 = 23, i4 = 540, i5 = 0;
+	q1.push(&i1);
+	q1.push(&i2);
+	q1.push(&i3);
+	q1.push(&i4);
+	q1.push(&i5);
+
+	q1.show();
+
+	TQueue<float> q2;
+
+	float f1 = -45.f, f2 = 4.23, f3 = 507.2, f4 = 1.001;
+	q2.push(&f1);
+	q2.push(&f2);
+	q2.push(&f3);
+	q2.push(&f4);
+
+	q2.show();
+
+	TQueue<square_matrix> q3;
+
+	square_matrix m1(3);
+	//rectangular_matrix m2(4, 2);
+	identity_matrix m3(5);
+	square_matrix m4(6);
+	m1.fill_rand();
+	//m2.fill_rand();
+	m4.fill_rand();
+	q3.push(&m1);
+	//q3.push(&m2);
+	q3.push(&m3);
+	q3.push(&m4);
+	
+	q3.show();
+
+	// онксвюеряъ, б йкюяяе QUEUE нм онмхлюер, врн он сйюгюрекч рхою SQUARE_MATRIX лнфер кефюрэ
+	// назейр йкюяяю-мюякедмхйю, х хяонкэгсер б яксвюе вецн ецн лерндш, ю гдеяэ мер, онрнлс врн
+	// лш ъбмн сйюгюкх, врн янгдюел нвепедэ хг йбюдпюрмшу люрпхж
+
 
 }
