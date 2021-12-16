@@ -33,6 +33,9 @@ public:
 	bool empty();
 	void show();
 
+	void demo(TQueue<T> q);
+	void demo2(TQueue<int> q);
+
 
 private:
 
@@ -119,6 +122,7 @@ inline bool TQueue<T>::empty()
 
 template<class T>
 inline void TQueue<T>::show()
+
 {
 
 	Elem* p = first;
@@ -128,5 +132,16 @@ inline void TQueue<T>::show()
 		p = p->next;
 	} while (p != first);
 	cout << endl;
+
+}
+
+template<class T>
+inline void TQueue<T>::demo(TQueue<T> q)
+{
+}
+
+template<class T>
+inline void TQueue<T>::demo2(TQueue<int> q)
+{
 
 }

@@ -298,32 +298,34 @@ square_matrix operator-(square_matrix m1, square_matrix m2)
 
 // ФАЙЛОВЫЙ ВВОД-ВЫВОД
 
-void square_matrix::twrite()
+void square_matrix::twrite(ofstream& ftout)
 {
-	ofstream ftout("File.txt", ios::app); // открываем для дозаписи
+	//ofstream ftout(filename_t, ios::app); // открываем для дозаписи
+
+	//ftout.open(ftout.)
 
 	if (!ftout) {
 		cerr << "Error: unable to open file " << endl;
 		exit(1);
 	}
 	ftout << order << *(this);
-	ftout.close();
+	//ftout.close();
 }
 
-void square_matrix::twrite(square_matrix* m)
+void square_matrix::twrite(ofstream& ftout, square_matrix* m)
 {
-	ofstream ftout("File.txt", ios::app);
+	//ofstream ftout("File.txt", ios::app);
 	if (!ftout) {
 		cerr << "Error: unable to open file " << endl;
 		exit(1);
 	}
 	ftout << m->order << *(m);
-	ftout.close();
+	//ftout.close();
 }
 
-square_matrix square_matrix::tread(int index)
+square_matrix square_matrix::tread(ifstream& ftin)
 {
-	ifstream ftin("File.txt", ios::in);
+	//ifstream ftin("File.txt", ios::in);
 	if (!ftin) {
 		cerr << "Error: unable to open file " << endl;
 		exit(1);
@@ -331,7 +333,8 @@ square_matrix square_matrix::tread(int index)
 	// смещаемся  к нужной матрице
 	square_matrix m;
 	//int ord;
-	for (int i = 1; i <= index; i++) {
+
+	/*for (int i = 1; i <= index; i++) {
 		//ftin >> ord;
 		//ftin.seekg(long(sizeof(int)) * ord * ord + 1, ios::cur);
 		try {
@@ -340,53 +343,72 @@ square_matrix square_matrix::tread(int index)
 		catch (exception ex) {
 			cout << ex.what() << "\n";
 		}
-	}
-	ftin.close();
+	}*/
+	ftin >> m;
+	//ftin.close();
 	return m;
 }
 
-void square_matrix::bwrite()
+void square_matrix::bwrite(ofstream& out)
 {
-	ofstream fdout(filename_b, ios::binary | ios::app);
-	if (!fdout) {
+
+	if (!out) {
 		cerr << "Error: unable to open file " << endl;
 		exit(1);
 	}
-	fdout << this->order <<*(this);
-	fdout.close();
+
+	out.write((char*)&order, sizeof(order));
+
+	for (int i = 0; i < order; i++) {
+		for (int j = 0; j < order; j++) {
+			out.write((char*)&data[i][j], sizeof(data[i][j]));
+		}
+	}
+	
 
 }
 
-void square_matrix::bwrite(square_matrix* m)
+void square_matrix::bwrite(ofstream& out, square_matrix* m)
 {
-	ofstream fdout(filename_b, ios::binary | ios::app);
-	if (!fdout) {
+	if (!out) {
 		cerr << "Error: unable to open file " << endl;
 		exit(1);
 	}
-	fdout << m->order << *(m);
-	fdout.close();
+
+	out.write((char*)&(m->order), sizeof(order));
+
+	for (int i = 0; i < m->order; i++) {
+		for (int j = 0; j < m->order; j++) {
+			out.write((char*)&m->data[i][j], sizeof(data[i][j]));
+		}
+	}
 
 }
 
-square_matrix square_matrix::bread(int index)
+void square_matrix::bread(ifstream& in)
 {
-	ifstream fdin(filename_b, ios::binary | ios::in);
-	if (!fdin) {
+	if (!in) {
 		cerr << "Error: unable to open file " << endl;
 		exit(1);
 	}
-	square_matrix m;
-	for (int i = 1; i <= index; i++) {
-		try {
-			fdin >> m;
-		}
-		catch (exception ex) {
-			cout << ex.what() << "\n";
+
+	for (int i = 0; i < order; i++)
+		delete[] data[i];
+	delete[] data;
+
+	in.read((char*)&order, sizeof(order));
+
+	data = new int* [order];
+	for (int i = 0; i < order; i++) {
+		data[i] = new int[order];
+	}
+
+	for (int i = 0; i < order; i++) {
+		for (int j = 0; j < order; j++) {
+			in.read((char*)&data[i][j], sizeof(data[i][j]));
 		}
 	}
-	fdin.close();
-	return m;
+
 }
 
 // ДЕСТРУКТОР

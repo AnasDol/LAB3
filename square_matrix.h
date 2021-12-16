@@ -62,16 +62,16 @@ public:
 
 	int operator()();
 	square_matrix& operator=(square_matrix& m);
-	friend ostream& operator<< (ostream& os, square_matrix& m);
+	/*virtual*/ friend ostream& operator<< (ostream& os, square_matrix& m);
 	friend istream& operator>> (istream& is, square_matrix& m);
 
-	void twrite(); // записывает матрицу в текстовый файл
-	static void twrite(square_matrix* m);
-	static square_matrix tread(int index = 1); // читает матрицу из текстовый файла
+	void twrite(ofstream& ftout); // записывает матрицу в текстовый файл
+	static void twrite(ofstream& ftout, square_matrix* m);
+	static square_matrix tread(ifstream& ftin/*int index = 1*/); // читает матрицу из текстовый файла
 
-	void bwrite(); // записывает матрицу в двоичный файл
-	static void bwrite(square_matrix* m);
-	static square_matrix bread(int index = 1); // читает матрицу из двоичного файла
+	void bwrite(ofstream&); // записывает матрицу в двоичный файл
+	static void bwrite(ofstream& out, square_matrix* m);
+	void bread(ifstream&); // читает матрицу из двоичного файла
 
 	~square_matrix();
 
