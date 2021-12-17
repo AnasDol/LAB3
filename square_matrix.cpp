@@ -300,52 +300,36 @@ square_matrix operator-(square_matrix m1, square_matrix m2)
 
 void square_matrix::twrite(ofstream& ftout)
 {
-	//ofstream ftout(filename_t, ios::app); // открываем для дозаписи
-
-	//ftout.open(ftout.)
 
 	if (!ftout) {
 		cerr << "Error: unable to open file " << endl;
 		exit(1);
 	}
 	ftout << order << *(this);
-	//ftout.close();
+
 }
 
 void square_matrix::twrite(ofstream& ftout, square_matrix* m)
 {
-	//ofstream ftout("File.txt", ios::app);
+
 	if (!ftout) {
 		cerr << "Error: unable to open file " << endl;
 		exit(1);
 	}
 	ftout << m->order << *(m);
-	//ftout.close();
+
 }
 
 square_matrix square_matrix::tread(ifstream& ftin)
 {
-	//ifstream ftin("File.txt", ios::in);
 	if (!ftin) {
 		cerr << "Error: unable to open file " << endl;
 		exit(1);
 	}
-	// смещаемся  к нужной матрице
+	
 	square_matrix m;
-	//int ord;
-
-	/*for (int i = 1; i <= index; i++) {
-		//ftin >> ord;
-		//ftin.seekg(long(sizeof(int)) * ord * ord + 1, ios::cur);
-		try {
-			ftin >> m;
-		}
-		catch (exception ex) {
-			cout << ex.what() << "\n";
-		}
-	}*/
 	ftin >> m;
-	//ftin.close();
+
 	return m;
 }
 
